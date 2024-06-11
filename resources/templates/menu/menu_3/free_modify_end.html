@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>자유게시글</title>
+<link href="/css/menu_3.css" rel="stylesheet">
+</head>
+<body>
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}" style="margin-left:70%;" >
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+    
+	<div class="main">
+		<div style="margin-top:10%">게시글이 수정되었습니다</div>
+		<div><a href="/menu/menu_3/free"><input class="button" type="button" value="게시글 목록"></a></div>
+	</div>
+	
+		<footer>
+		   <div class="f_left">
+	            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+	       </div>
+		   <div class="f_center">
+	            <div>
+	            	<div>상호명: 보드게임즈</div>
+	            	<div>대표: 김진경</div>
+	            	<div>고객센터: 070-000-0000</div>
+	            	<div>사업장 주소: 경기도 화성시 병점동</div>
+	            </div>
+	       </div>
+		</footer>
+
+	
+	
+</body>
+</html>

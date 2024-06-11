@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu&display=swap');
+html{ background-color:rgb(255, 254, 248);}
+body{display:grid;
+     grid-template-rows: 0.5fr auto 0.1fr; grid-row-gap: 20px;
+	 grid-template-columns:0.4fr 2fr 0.4fr;}
+body{font-family: "Gaegu", sans-serif; color:white;
+  	 font-weight: 400; font-size:23px; font-style: normal;}
+  	 
+  	 
+
+header{grid-row: 1/2; grid-column: 2/3;
+       display:grid; grid-template-columns: 20% 40% 20%}
+.h_left{margin-left:20%;margin-top:10%;}
+.h_right{margin-top:10%; display:flex;}
+.h_right>div>p {color:black; font-size:20px; width:200px; margin-right:-10px;}
+
+.main{grid-row: 2/3; grid-column: 2/3;
+	  background-color:rgb(161, 161, 224);
+      border-radius: 6px; border-color:#D19ECB;
+      display:grid; grid-template-rows: 0.1fr 3fr 2fr 2fr;
+	   justify-content:center;row-gap:5%;
+	   padding-bottom:5%;}
+.none_user{grid-row:1/2;}
+.user{grid-row:2/3; margin-top:-3%; padding-left:3%;}
+.div_reply{grid-row:3/4; display:flex; flex-direction:column;
+		   justify-content:center; align-items:center;}
+.reply_div{grid-row:4/5; display:flex; justify-content:center;}
+
+
+#text_show{padding-left:10%;width: 1000px;}
+    
+
+
+
+#list{padding-top:3%; padding-left:5%; padding-right:10%;
+	  width: 1300px;}
+tr, th, td{border:1px solid white;
+				text-align:center;}
+
+
+input:not(.button) {
+	width: 300px; height:25px;
+	border-radius: 6px; border-color:white;
+	font-size: 25px;font-family: "Gaegu", sans-serif; font-weight: 400; font-style: normal;}
+.main>form>button{margin-left:40%;}
+
+
+#reply_div{padding-top:10%; padding-left:10%; padding-right:10%;
+	  width: 1000px;margin-top:10px;}
+
+#reply_div table,tr{border:0px;}
+#reply_div td{border-radius: 6px; border-color:white;}
+#replytext{font-size: 25px;font-family: "Gaegu", sans-serif; 
+			font-weight: 400; font-style: normal; color:white;
+			width:940px; height:100px; background-color:rgb(161, 161, 224);
+				    border:0px;}
+#replyList{font-size: 25px;font-family: "Gaegu", sans-serif; 
+			font-weight: 400; font-style: normal; color:white;
+			width:1100px; height:auto; background-color:rgb(161, 161, 224);
+			border:0px; margin-top:1%;border-collapse:collapse;
+			}
+
+#replyList td:nth-child(3) {width: 750px;}
+#replyList td:nth-child(2) {width: 140px;}
+.reply_con{display:flex; justify-content:space-between;
+		   padding-left:10px;padding-right:10px;}
+.reply_con button{font-family: "Gaegu", sans-serif; font-size:15px;  
+				  font-weight: 400; font-style: normal; color:white;
+				  margin-top:-5px;}
+.table_border{border-radius: 6px; border-color:white;}
+.none_user{display:flex; flex-direction:column;
+			justify-content:center; align-items:center;
+			padding-top:5%;}
+		 
+.button{position: relative; display: inline-block;
+        padding: 3px 18px; margin: 20px 10px 10px;
+        transition: top .01s linear;
+    	border-radius: 6px; border-color:#D19ECB;
+   		text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    	background-color: #cb99c5;
+    	box-shadow: 0 0 0 1px #cb99c5 inset,
+        			0 0 0 2px rgba(255,255,255,0.15) inset,
+        			0 8px 0 0 rgba(189, 142, 183, .7),
+        			0 8px 0 1px rgba(0,0,0,.4),
+        			0 8px 8px 1px rgba(0,0,0,0.5);
+    	font-size: 20px; color: white; text-align: center;
+	  	font-family: "Gaegu", sans-serif; font-weight: 400; font-style: normal;
+	  	cursor:pointer;}
+.button:hover {background-color: #D19ECB;}
+.button:active {top: 9px; box-shadow: none;}
+.buttons{display:flex; padding-left:5%;} 
+.buttons_reply{display:flex; margin-left:-900px;}
+a{text-decoration: none; color: inherit;}
+
+footer{grid-row: 3/4; grid-column: 2/3;
+		display:flex; justify-content:center; 
+		align-items:center;padding-top:10%;}
+.f_center{color:black;margin-left:10%; font-size:20px;}  

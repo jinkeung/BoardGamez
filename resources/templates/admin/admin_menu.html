@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>관리자 메뉴</title>
+<link rel="stylesheet" type="text/css" href="/css/admin_menu.css">
+</head>
+<body>
+    
+	 <header>   
+       <div class="h_left">
+            <div><a href="/admin/admin_menu"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center" th:if="${admin!=true}">
+       		<div>관리자 전용 페이지 입니다</div>
+       </div>
+
+
+       <div class="h_right"  th:unless="${username != null}"  style="margin-left:90%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_center"></div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>관리자 <span th:text="${username}"></span>님!</p></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+	
+	
+    <div class="menu" th:if="${admin==true}">
+        <ol>상품 관리
+        	<li><img src="/img/logo/pink_dice.png"><a href="/admin/admin_product">상품 조회, 등록, 삭제</a></li>
+        </ol>       	
+        <ol>회원 관리
+        	<li><img src="/img/logo/pink_dice.png"><a href="/admin/admin_user">회원 조회, 삭제</a></li>
+        </ol>
+        <ol>게시글 관리
+        	<li><img src="/img/logo/pink_dice.png"><a href="/admin/admin_free">자유 게시글 조회, 삭제</a></li>
+        </ol>
+    </div>
+    
+   	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+	
+</body>
+</html>

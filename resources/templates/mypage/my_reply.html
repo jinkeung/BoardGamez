@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>내 댓글</title>
+<link href="/css/menu_3.css" rel="stylesheet">
+</head>
+<body>
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}" style="margin-left:70%;" >
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+    
+	<div class="main">
+		<div class="none_user" th:unless="${username != null}">
+			<h2>회원 전용 페이지 입니다</h2>
+			<div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+		</div>
+			
+		<h2 style="margin-left: 20px;"><img src="/img/logo/pink_dice.png">나의 댓글</h2>
+		<div class="user" th:if="${username != null}">
+		    <h3>현재 댓글 목록</h3>
+		    <form id="delete_reply_form" action="/mypage/deletereply" method="post">
+		        <table id="list">
+		            <tr>
+		                <th>체크</th>
+		                <th>댓글 번호</th>
+		                <th>작성자</th>
+		                <th>댓글</th>
+		                <th>작성 일시</th>
+		            </tr>
+		            <tr th:each="item : ${user_reply}">
+		                <td><input type="checkbox" name="delete_reply_num" th:value="${item.reply_num}" id="checkbox"></td>
+		                <td th:text="${item.reply_num}"></td>
+		                <td th:text="${item.id}"></td>
+		                <td th:text="${item.text}"></td>
+		                <td th:text="${#dates.format(item.date_now, 'yy-MM-dd HH:mm')}">DATE_NOW</td>
+		            </tr>
+		        </table>
+		        <input class="button"  value="삭제" id="delete_but" onclick="deleteReply()">
+		    </form>
+		</div>
+	</div>	
+		
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+
+		<script>
+	    function deleteReply() {
+	        var checkboxes = document.getElementsByName("delete_reply_num");
+	        var isChecked = false;
+	        
+	        for (var i = 0; i < checkboxes.length; i++) {
+	            if (checkboxes[i].checked) {
+	                isChecked = true;
+	                break;
+	            }
+	        }
+	
+	        if (isChecked==false) {
+	            alert("삭제할 항목을 선택해주세요.");
+	            return; // 선택된 항목이 없으면 폼 제출 취소
+	        }
+	
+	        return document.getElementById("delete_reply_form").submit();// 선택된 항목이 있으면 폼 제출 진행
+	    }
+	</script>
+
+</body>
+</html>

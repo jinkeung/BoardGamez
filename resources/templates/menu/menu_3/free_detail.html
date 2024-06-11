@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>자유게시글</title>
+<link href="/css/free_detail.css" rel="stylesheet">
+</head>
+<body>
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}"  style="margin-left:70%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+    <!-- div(main) >> div(none_user) // div(user)-->
+	<div class="main">
+		<div class="none_user" th:unless="${username != null}">
+			<h2>회원 전용 페이지 입니다</h2>
+			<div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+		</div>
+		<!-- div(user) >> title, buttons // table(list)제목 // div(내용) // div(div_reply)댓글  // div(reply_div)댓글작성 -->	
+		<div class="user" th:if="${username != null}">
+		    <h2 style="margin-left: 20px;"><img src="/img/logo/pink_dice.png">자유게시글</h2>
+		    <div class="buttons">
+			    <div><a href="/menu/menu_3/free_write"><input class="button" type="button" value="게시글 작성"></a></div>
+			    <div><a href="/menu/menu_3/free"><input class="button" type="button" value="게시글 목록"></a></div>
+				<div>
+					<form th:if="${writer==true}" th:action="@{/menu/menu_3/freemodify}" method="post">
+					    <input type="hidden" name="s_num" th:value="${freedetail.getS_num()}">
+					    <button type="submit" class="button">게시글 수정</button>
+					</form>
+				</div>
+				<div>
+					<form th:if="${writer==true}" th:action="@{/menu/menu_3/freedelete}" method="post">
+					    <input type="hidden" name="s_num" th:value="${freedetail.getS_num()}">
+					    <button type="submit" class="button">게시글 삭제</button>
+					</form>
+				</div>
+			</div>
+		    <table id="list">
+		        <tr>
+		            <th>게시글 번호</th>
+		            <th>작성자</th>
+		            <th>제목</th>
+		            <th>작성 일시</th>
+		        </tr>
+		        <tr th:each="item : ${freedetail}"  th:attr="data-s-n=${item.s_num}">
+		            <td th:text="${item.s_num}">S_NUM</td>
+		            <td th:text="${item.id}">ID</td>
+		            <td th:utext="${item.title.replaceAll('\n', '<br>')}">TITLE</td>
+		            <td th:text="${#dates.format(item.date_now, 'yy-MM-dd HH:mm')}">DATE_NOW</td>
+		        </tr>
+		    </table>
+		   <div id="text_show" style="margin-top: 20px; margin-left: 20px;">
+		        <h3 th:text="${freedetail.title}"></h3>
+		        <div th:each="item : ${freedetail}">
+		            <p th:utext="${item.text.replaceAll('\n', '<br>')}" />
+		    	</div>
+			</div>
+		</div>
+		
+		<div class="div_reply">
+			<div class="buttons_reply">
+				<div th:if="${reply_writer==true}">
+					<form th:if="${reply_writer==true}" th:action="@{/mypage/my_reply}" method="post">
+					    <input type="hidden" name="s_num" th:value="${freedetail.getS_num()}">
+					    <button type="submit" class="button">내 댓글 관리</button>
+					</form>
+				</div>
+			</div>
+			<div>
+			    <table id="replyList" th:if="${matchreply != null}">
+			        <tr>
+			        	<th>num</th>
+			            <th>작성자</th>
+			            <th>댓글</th>
+			            <th>작성 일시</th>
+			        </tr>
+			        <tr th:each="reply : ${matchreply}">
+			        	<td th:text=${reply.reply_num}></td>
+			            <td th:text="${reply.id}"></td>
+			            <td class="reply_con">
+			                <p th:utext="${reply.text.replaceAll('\n', '<br>')}" style="text-align:left;"></p>
+			            </td>
+			            <td th:text="${#dates.format(reply.date_now, 'yy-MM-dd HH:mm')}"></td>
+			        </tr>
+			    </table>
+			</div>
+		</div>
+		
+		<div class="reply_div">
+			<form action="/menu/menu_3/replywrite" method="post" id="reply_write">		
+				<input type="hidden" name="s_num" th:value="${freedetail.getS_num()}">
+					<table id="reply_table">
+						<tr class="table_border"><td>댓글</td><td><textarea name="replytext" id="replytext" rows="10" cols="50"></textarea></td></tr>
+					</table>
+				<input style="margin-left:40%;"type="button" class="button" value="댓글 작성" onclick="sub()">
+			</form>
+		</div>
+	
+	</div>
+	
+
+	
+	
+	
+		<footer>
+		   <div class="f_left">
+	            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+	       </div>
+		   <div class="f_center">
+	            <div>
+	            	<div>상호명: 보드게임즈</div>
+	            	<div>대표: 김진경</div>
+	            	<div>고객센터: 070-000-0000</div>
+	            	<div>사업장 주소: 경기도 화성시 병점동</div>
+	            </div>
+	       </div>
+		</footer>
+		
+		<script>
+			function sub(){
+				const text=document.getElementById("replytext");
+				if(text.value==""){alert("댓글을 입력해주세요");text.focus();return;}
+			
+				
+				document.getElementById("reply_write").submit();
+			}
+		</script>
+	
+	
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="/css/home.css?v=2">
+</head>
+
+    <!-- body >> header //  div(menu) // div(center) // div(main) //footer  -->
+<body>
+	<!-- header >> div(h_left) // div(h_center) // div(h_rignt) -->
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+       <div class="h_center"></div>
+       <!-- username null 일경우 회원가입, 로그인버튼 // null이 아닐경우 ~님!, 마이페이지, 로그아웃 버튼 -->
+       <div class="h_right"  th:unless="${username != null}" style="margin-left:70%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p id="welcome">Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+
+
+    <div class="menu">
+        <ol>회사별 판매 정보
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_1/kobo">코리아보드게임즈</a></li>
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_1/asmodee">아스모디코리아</a></li>
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_1/boardm">보드엠</a></li>
+        </ol>       	
+        <ol>보드게임 정보
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_2/rules">게임 룰 설명</a></li>
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_2/links">관련 사이트 링크</a></li>
+        </ol>
+        <ol>회원 게시판
+        	<li><img src="/img/logo/pink_dice.png"><a href="/menu/menu_3/free">자유 게시글</a></li>
+        </ol>
+    </div>
+	
+    <div class="center">
+        <div><a href="/"><img src="/img/logo/logo_big.png"></a></div>
+    </div>
+
+	<div class="main">
+		<div>Today's pick</div>
+		<ul id="today_pick">
+		    <th:block th:each="product : ${random_product}">
+		        <form th:action="@{/menu/menu_1/detail}" method="post">
+		            <input type="hidden" name="s_n" th:value="${product.s_n}">
+		            <li>
+		                <button type="submit" style="background:none; border:none; padding:0;">
+		                    <div class="img"><img th:src="@{'/img/products/' + ${product.s_n} + '.jpg'}"></div>
+		                </button>
+		                <div class="name" th:text="${product.name}"></div>
+		                <div class="price" th:text="'￦' + ${product.price}"></div>
+		            </li>
+		        </form>
+		    </th:block>
+		</ul>
+	</div> 
+	
+	
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+	
+</body>
+</html>

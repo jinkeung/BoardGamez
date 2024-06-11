@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>관련링크</title>
+<link href="/css/menu_2.css" rel="stylesheet">
+</head>
+<body>
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}"  style="margin-left:70%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+    
+	<div class="main">
+		<h2 style="margin-left: 40px; margin-bottom:-50px;"><img src="/img/logo/pink_dice.png">관련 사이트 링크</h2>
+		<ul>
+			<li><a href="https://www.boardlife.co.kr/" target="_blank"><img src="/img/logo/pink_dice.png">보드라이프(보드게임 커뮤니티)</a></li>
+			<li><a href="https://boardgamegeek.com/" target="_blank" ><img src="/img/logo/pink_dice.png">보드게임 긱(보드게임 정보)</a></li>
+			<li><a href="https://boardgamearena.com/" target="_blank"><img src="/img/logo/pink_dice.png">보드게임 아레나(온라인 보드게임 플레이)</a></li>
+			<li><a href="https://www.yucata.de/en/" target="_blank"><img src="/img/logo/pink_dice.png">유카타(온라인 보드게임 플레이)</a></li>
+		</ul>
+	</div> 
+	
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+</body>
+</html>

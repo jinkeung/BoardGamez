@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>admin_main</title>
+<link rel="stylesheet" type="text/css" href="/css/admin_login.css">
+</head>
+<body>
+    
+     <header>   
+       <div class="h_left">
+            <div><a href="/admin/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center" th:if="${admin!=true}" >
+       		<div>관리자 전용 페이지 입니다</div>
+       </div>
+
+       <div class="h_right"  th:if="${admin!=true}"  style="margin-left:90%;">
+            <div><a href="/"><input class="button" type="button" value="홈페이지로"></a></div>
+       </div>
+       <div class="h_right" th:if="${admin == true}">
+            <div><p> 관리자 <span th:text="${username}"></span>님!</p></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+
+
+    <div class="center">
+		<form action="/admin/admin_menu" method="post" id="login_form">
+		<table>
+			<tr>
+				<td></td>
+				<td th:if="${userlogin==false}" style="color:red; padding-bottom:5%">로그인 정보가 일치하지 않습니다.</td>
+			</tr>
+			<tr>
+				<td>아이디</td>
+				<td><input id="login_id" name="login_id"></td>
+			</tr>
+			<tr>
+				<td>패스워드</td>
+				<td><input id="login_pw" name="login_pw" type="password"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td id="login"><input class="button" type="button" value="로그인" onclick="sub()"></td>	
+			</tr>
+		</table>
+		</form>	
+    </div>
+
+	
+	
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+	
+		<script>
+		function sub(){
+			
+			const id=document.getElementById("login_id");
+			const pw=document.getElementById("login_pw");
+			
+			if(id.value==""){alert("아이디를 입력해주세요"); return;}
+			if(pw.value==""){alert("패스워드를 입력해주세요"); return;}
+
+			
+			
+			document.getElementById("login_form").submit();
+			
+		}
+		</script>
+	
+</body>
+</html>

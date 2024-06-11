@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>회원가입</title>
+<link href="/css/join_main.css" rel="stylesheet">
+</head>
+<body>
+	
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}"  style="margin-left:70%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p id="welcome">Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+	<div class="main">
+			<div class="none_user" th:unless="${username != null}">
+			<h2>회원 전용 페이지 입니다</h2>
+			<div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+		</div>
+			
+		<div class="user" th:if="${username != null}">
+			<h2><img src="/img/logo/pink_dice.png">내 정보</h2>
+			<form action="/mypage/my_info_modify" method="post" id="user_info">
+				<table>			
+					<tr>
+					    <td>아이디</td>
+					    <td><div id="id" name="id" th:text="${user_info.id}"></div></td>
+					</tr>
+					<tr>
+					    <td>패스워드</td>
+					    <td><input id="pw" name="pw" type="password" th:value="${user_info.pw}"></td>
+					</tr>
+					<tr>
+					    <td>패스워드 확인</td>
+					    <td><input id="pw_c" name="pw_c" type="password" th:value="${user_info.pw}"></td>    
+					</tr>
+					<tr>
+					    <td>이름</td>
+					    <td><input id="name" name="name" th:value="${user_info.name}"></td>    
+					</tr>
+					<tr>
+					    <td>주소</td>
+					    <td>
+					        <input type="number" id="postcode" name="postcode" th:value="${user_info.postcode}">
+					        <input type="button" class="button" onclick="execDaumPostcode()" value="주소 찾기"><br>
+					        <input type="text" id="addr_m" name="addr_m" placeholder="주소" th:value="${user_info.addr_m}"><br>
+					        <input type="text" id="addr_s" name="addr_s" placeholder="상세주소" th:value="${user_info.addr_s}">            
+					    </td>
+					</tr>
+					<tr>
+						<td></td>
+						<td id="join"><input class="button" type="button" value="수정" onclick="sub()"></td>	
+					</tr>
+					
+				</table>
+			</form>	
+		</div> 
+	</div>
+			
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+	
+	<!-- 정규표현식 확인 후 폼 제출 -->
+	<script>
+		function sub(){
+
+
+			//pw 확인
+			const pw=document.getElementById("pw");
+			const pw_c=document.getElementById("pw_c");
+			const pw_RegEx=	/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+			
+			if(pw.value!=pw_c.value){alert("입력한 비밀번호를 다시 확인해주세요");
+			   pw.value="";pw_c.value=""; return;}
+			if(pw_RegEx.test(pw.value)!=true){
+				alert("비밀번호는 영문자, 숫자, 특수문자(@$!%*?&)를 포함하여 8글자 이상 입력해주세요");
+				pw.value="";pw_c.value=""; return;}
+			
+			//name 확인
+			const name=document.getElementById("name");
+			if(name.value==""){alert("이름을 입력해주세요");name.focus();return;}
+			
+			//주소 확인
+			const postcode=document.getElementById("postcode");
+			const addr_m=document.getElementById("addr_m");
+			if(postcode.value==""||addr_m.value==""){
+				alert("주소를 입력해주세요");postcode.focus();return;}
+			
+			alert("수정완료");
+			
+			document.getElementById("user_info").submit();
+	
+		}
+	</script>
+	
+	<!--daum주소api-->	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+	    function execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	
+	                var addr = '';
+	
+	                if (data.userSelectedType === 'R') {
+	                	addr = data.roadAddress;
+	                } else { 
+	                    addr = data.jibunAddress;
+	                }
+	
+	                document.getElementById('postcode').value = data.zonecode;
+	                document.getElementById("addr_m").value = addr;
+	                document.getElementById("addr_s").focus();
+	            }
+	        }).open();
+	    }
+	</script>
+
+	
+</body>
+</html>

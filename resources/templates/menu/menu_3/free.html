@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>자유게시글</title>
+<link href="/css/free.css" rel="stylesheet">
+</head>
+<!-- body>> header // div(main) // footer -->	
+<body>
+     <header>   
+       <div class="h_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+
+       <div class="h_center"></div>
+
+       <div class="h_right"  th:unless="${username != null}" style="margin-left:70%;">
+            <div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+       </div>
+       <div class="h_right" th:if="${username != null}">
+            <div><p>Welcome, <span th:text="${username}"></span>님!</p></div>
+            <div><a href="/mypage/my_main"><input class="button" type="button" value="마이페이지"></a></div>
+            <form action="/login/logout" method="post"><div><input class="button" type="submit" value="로그아웃"></div></form>
+       </div>
+    </header>
+    
+	<div class="main">
+		<div class="none_user" th:unless="${username != null}">
+			<h2>회원 전용 페이지 입니다</h2>
+			<div><a href="/join/join_main"><input class="button" type="button" value="회원가입"></a></div>
+            <div><a href="/login/login_main"><input class="button" type="button" value="로그인"></a></div>
+		</div>
+			
+		<div class="user" th:if="${username != null}">
+			<h2 style="margin-left: 20px;"><img src="/img/logo/pink_dice.png">자유게시글</h2>
+           	<div class="buttons">
+			    <div><a href="/menu/menu_3/free_write"><input class="button" type="button" value="게시글 작성"></a></div>
+			</div>
+				<table id="list">
+			    <tr>
+			        <th>게시글 번호</th>
+			        <th>작성자</th>
+			        <th>제목</th>
+			        <th>작성 일시</th>
+			    </tr>
+			    <tr th:each="item : ${free_list}">
+			        <td th:text="${item.s_num}"></td>
+			        <td th:text="${item.id}"></td>
+			        <td>
+			            <form th:action="@{/menu/menu_3/freedetail}" method="post">
+			                <input type="hidden" name="s_num" th:value="${item.s_num}">
+			                <button class="font" type="submit" style="background:none; border:none; padding:0; font-size:inherit; cursor:pointer;">
+			                    <span id="titles" th:text="${item.title}">TITLE</span>
+			                </button>
+			            </form>
+			        </td>
+			        <td th:text="${#dates.format(item.date_now, 'yy-MM-dd HH:mm')}"></td>
+			    </tr>
+			</table>
+		</div> 
+	</div>
+	
+	<footer>
+	   <div class="f_left">
+            <div><a href="/"><img src="/img/logo/logo_small.png"></a></div>
+       </div>
+	   <div class="f_center">
+            <div>
+            	<div>상호명: 보드게임즈</div>
+            	<div>대표: 김진경</div>
+            	<div>고객센터: 070-000-0000</div>
+            	<div>사업장 주소: 경기도 화성시 병점동</div>
+            </div>
+       </div>
+	</footer>
+	
+	
+</body>
+</html>
